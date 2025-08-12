@@ -1,0 +1,13 @@
+{
+  "name": "cursor-othello",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start:server": "node server.js",
+    "postinstall": "echo 'Run `npm run start:server` to start WebSocket server on :8080'"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

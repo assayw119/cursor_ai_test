@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오셀로 (리버시) 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>오셀로 (리버시)</h1>
+        
+        <div class="game-info">
+            <div class="turn-display">
+                <span>현재 턴: </span>
+                <div class="current-player">
+                    <div class="stone black"></div>
+                    <span id="current-player">흑돌</span>
+                </div>
+            </div>
+            
+            <div class="score-board">
+                <div class="score-item">
+                    <div class="stone black"></div>
+                    <span>흑돌: </span>
+                    <span id="black-score">2</span>
+                </div>
+                <div class="score-item">
+                    <div class="stone white"></div>
+                    <span>백돌: </span>
+                    <span id="white-score">2</span>
+                </div>
+            </div>
+        </div>
+
+        <details class="settings" open>
+            <summary>게임 설정</summary>
+            <div class="ai-controls">
+                <label>
+                    시작 플레이어:
+                    <select id="start-player">
+                        <option value="black" selected>흑 먼저</option>
+                        <option value="white">백 먼저</option>
+                    </select>
+                </label>
+                <label>
+                    AI 진영:
+                    <select id="ai-side">
+                        <option value="none">끄기 (인간 vs 인간)</option>
+                        <option value="black">흑 (AI)</option>
+                        <option value="white" selected>백 (AI)</option>
+                    </select>
+                </label>
+                <label>
+                    난이도:
+                    <select id="ai-level">
+                        <option value="easy">Easy</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </label>
+            </div>
+        </details>
+        
+        <div class="layout">
+            <div>
+                <div class="game-board" id="game-board">
+                    <!-- 게임 보드는 JavaScript로 생성됩니다 -->
+                </div>
+                <div class="game-controls">
+                    <button id="new-game-btn">새 게임</button>
+                    <button id="pass-btn" disabled>패스</button>
+                    <button id="hint-btn">힌트</button>
+                    <button id="undo-btn" disabled>되돌리기</button>
+                </div>
+            </div>
+            <div class="history">
+                <div class="history-header">게임 이력</div>
+                <ol id="history-list" class="history-list"></ol>
+            </div>
+        </div>
+        
+        <div class="game-status" id="game-status">
+            <!-- 게임 상태 메시지가 여기에 표시됩니다 -->
+        </div>
+
+        <!-- 사운드 리소스 -->
+        <audio id="sfx-place" preload="auto">
+            <source src="https://cdn.jsdelivr.net/gh/terkelg/sfx@master/sounds/click2.mp3" type="audio/mpeg" />
+        </audio>
+        <audio id="sfx-flip" preload="auto">
+            <source src="https://cdn.jsdelivr.net/gh/terkelg/sfx@master/sounds/pop1.mp3" type="audio/mpeg" />
+        </audio>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+      // 간단한 클라이언트 WebSocket 초기 부트 (서버가 없으면 무시)
+      window.MULTI = { enabled: false };
+      try {
+        const url = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? `ws://localhost:8080` : `ws://${location.host}`;
+        const ws = new WebSocket(url);
+        window.MULTI.ws = ws;
+        ws.addEventListener('open', () => { window.MULTI.enabled = true; });
+      } catch (e) { /* noop */ }
+    </script>
+</body>
+</html>
