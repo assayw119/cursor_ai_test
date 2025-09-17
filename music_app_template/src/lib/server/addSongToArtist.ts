@@ -5,7 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();
 
-export async function addSong(title: string, artistId: number, audioFile: File, imageFile?: File) {
+export async function addSongToArtist(
+  artistId: number, 
+  title: string, 
+  audioFile: File, 
+  imageFile?: File
+) {
   // 업로드 디렉토리 경로 설정
   const uploadDir = path.join(process.cwd(), 'static', 'uploads');
   
